@@ -1,7 +1,6 @@
 package dto
 
 import (
-	"github.com/llygcd/block-compensation/internal/global"
 	"github.com/qiniu/qmgo/options"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -15,21 +14,20 @@ type (
 	Nft struct {
 		DenomID         string `bson:"denom_id"`
 		NftID           string `bson:"nft_id"`
-		CreateTime      int64  `bson:"create_time"`
+		CreateTime      int    `bson:"create_time"`
 		Data            string `bson:"data"`
 		DenomName       string `bson:"denom_name"`
-		LastBlockHeight int64  `bson:"last_block_height"`
-		LastBlockTime   int64  `bson:"last_block_time"`
+		LastBlockHeight int    `bson:"last_block_height"`
+		LastBlockTime   int    `bson:"last_block_time"`
 		NftName         string `bson:"nft_name"`
 		Owner           string `bson:"owner"`
-		UpdateTime      int64  `bson:"update_time"`
+		UpdateTime      int    `bson:"update_time"`
 		URI             string `bson:"uri"`
-		IsDelete        bool   `bson:"is_delete"`
 	}
 )
 
 func (n Nft) CollectionName() string {
-	return global.GetServerConf().ChainId + "_nft"
+	return "ex_sync_nft"
 }
 
 func (n Nft) Indexes() (indexes []options.IndexModel) {

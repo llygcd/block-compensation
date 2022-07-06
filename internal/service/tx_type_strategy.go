@@ -13,20 +13,20 @@ type TxTypeStrategy interface {
 func GetTxTypeStrategy(txType string, serv *CompensationService) TxTypeStrategy {
 	var txTypeStrategy TxTypeStrategy
 
-	/*	switch txType {
-		case TypeIssueDenom:
-			txTypeStrategy = &DenomIssue{serv.denomRepo}
-		case TypeTransferDenom:
-			txTypeStrategy = &DenomTransfer{serv.denomRepo}
-		case TypeNFTMint:
-			txTypeStrategy = &NftMint{serv.nftRepo}
-		case TypeNFTEdit:
-			txTypeStrategy = &NftEdit{serv.nftRepo}
-		case TypeNFTTransfer:
-			txTypeStrategy = &NftTransfer{serv.nftRepo}
-		case TypeNFTBurn:
-			txTypeStrategy = &NftBurn{serv.nftRepo}
-		}*/
+	switch txType {
+	case TypeIssueDenom:
+		txTypeStrategy = &DenomIssue{serv.denomRepo}
+	case TypeTransferDenom:
+		txTypeStrategy = &DenomTransfer{serv.denomRepo}
+	case TypeNFTMint:
+		txTypeStrategy = &NftMint{serv.nftRepo}
+	case TypeNFTEdit:
+		txTypeStrategy = &NftEdit{serv.nftRepo}
+	case TypeNFTTransfer:
+		txTypeStrategy = &NftTransfer{serv.nftRepo}
+	case TypeNFTBurn:
+		txTypeStrategy = &NftBurn{serv.nftRepo}
+	}
 	return txTypeStrategy
 }
 

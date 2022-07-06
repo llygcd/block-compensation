@@ -1,7 +1,6 @@
 package dto
 
 import (
-	"github.com/llygcd/block-compensation/internal/global"
 	"github.com/qiniu/qmgo/options"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -15,7 +14,7 @@ type Block struct {
 }
 
 func (b Block) CollectionName() string {
-	return global.GetServerConf().ChainId + "_block"
+	return "sync_block"
 }
 
 func (b Block) Indexes() (indexes []options.IndexModel) {

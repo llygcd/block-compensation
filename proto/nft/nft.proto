@@ -25,7 +25,7 @@ message Denom {
   string id = 1;
   string name = 2;
   string schema = 3;
-  string creator = 4;
+  string owner = 4;
   string symbol = 5;
   bool mint_restricted = 6 ;
   bool update_restricted = 7 ;

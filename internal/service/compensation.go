@@ -8,23 +8,25 @@ import (
 )
 
 type CompensationService struct {
-	denomRepo repository.IDenomRepo
-	nftRepo   repository.INftRepo
-	blockRepo repository.IBlockRepo
-	txRepo    repository.ITxRepo
+	denomRepo  repository.IDenomRepo
+	nftRepo    repository.INftRepo
+	blockRepo  repository.IBlockRepo
+	txRepo     repository.ITxRepo
+	poolClient *pool.Client
 }
 
-func NewCompensationService(denomRepo repository.IDenomRepo, nftRepo repository.INftRepo, blockRepo repository.IBlockRepo, txRepo repository.ITxRepo) *CompensationService {
+func NewCompensationService(denomRepo repository.IDenomRepo, nftRepo repository.INftRepo, blockRepo repository.IBlockRepo, txRepo repository.ITxRepo, poolClient *pool.Client) *CompensationService {
 	return &CompensationService{
-		denomRepo: denomRepo,
-		nftRepo:   nftRepo,
-		blockRepo: blockRepo,
-		txRepo:    txRepo,
+		denomRepo:  denomRepo,
+		nftRepo:    nftRepo,
+		blockRepo:  blockRepo,
+		txRepo:     txRepo,
+		poolClient: poolClient,
 	}
 }
 
-func (s *CompensationService) Compensation(height int64, poolClient *pool.Client) {
-	txs, txes, err := handlers.ParseBlockAndTxs(height, poolClient)
+func (s *CompensationService) Compensation(height int64) {
+	txs, txes, err := handlers.ParseBlockAndTxs(height, s.poolClient)
 	if err != nil {
 		logrus.Error(txs, txes)
 	}

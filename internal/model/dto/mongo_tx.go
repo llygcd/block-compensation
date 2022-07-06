@@ -2,7 +2,6 @@ package dto
 
 import (
 	"github.com/kaifei-bianjie/msg-parser/types"
-	"github.com/llygcd/block-compensation/internal/global"
 	"github.com/qiniu/qmgo/options"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -14,7 +13,7 @@ type (
 		TxHash        string        `bson:"tx_hash"`
 		Type          string        `bson:"type"` // parse from first msg
 		Memo          string        `bson:"memo"`
-		Status        uint32        `bson:"status"`
+		Status        int           `bson:"status"`
 		Log           string        `bson:"log"`
 		Fee           *types.Fee    `bson:"fee"`
 		GasUsed       int64         `bson:"gas_used"`
@@ -24,7 +23,7 @@ type (
 		DocTxMsgs     []types.TxMsg `bson:"msgs"`
 		Addrs         []string      `bson:"addrs"`
 		ContractAddrs []string      `bson:"contract_addrs"`
-		TxIndex       uint32        `bson:"tx_index"`
+		TxIndex       int           `bson:"tx_index"`
 		Ext           interface{}   `bson:"ext"`
 	}
 
@@ -39,13 +38,13 @@ type (
 	}
 
 	EventNew struct {
-		MsgIndex uint32  `bson:"msg_index" json:"msg_index"`
+		MsgIndex int     `bson:"msg_index" json:"msg_index"`
 		Events   []Event `bson:"events"`
 	}
 )
 
 func (t Tx) CollectionName() string {
-	return global.GetServerConf().ChainId + "_tx"
+	return "sync_tx"
 }
 
 func (t Tx) Indexes() (indexes []options.IndexModel) {

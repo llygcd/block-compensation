@@ -9,7 +9,7 @@ const (
 	GovRouteKey          string = "gov"
 	FeegrantRouteKey     string = "feegrant"
 	SlashingRouteKey     string = "slashing"
-	NftRouteKey          string = "opb"
+	NftRouteKey          string = "nft"
 	ServiceRouteKey      string = "service"
 	TokenRouteKey        string = "token"
 	HtlcRouteKey         string = "htlc"

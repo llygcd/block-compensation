@@ -3,17 +3,15 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/llygcd/block-compensation/internal/service"
-	"github.com/llygcd/block-compensation/pkg/pool"
 	"strconv"
 )
 
 type CompensationController struct {
 	compensationService *service.CompensationService
-	poolClient          *pool.Client
 }
 
-func NewCompensationController(compensationService *service.CompensationService, poolClient *pool.Client) *CompensationController {
-	return &CompensationController{compensationService: compensationService, poolClient: poolClient}
+func NewCompensationController(compensationService *service.CompensationService) *CompensationController {
+	return &CompensationController{compensationService: compensationService}
 }
 
 func (ctl *CompensationController) Compensation(c *gin.Context) {
@@ -23,6 +21,5 @@ func (ctl *CompensationController) Compensation(c *gin.Context) {
 	if err != nil {
 
 	}
-	ctl.compensationService.Compensation(height, ctl.poolClient)
-
+	ctl.compensationService.Compensation(height)
 }

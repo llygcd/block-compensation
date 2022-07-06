@@ -36,9 +36,11 @@ func (repo *NftRepo) Update(one dto.Nft) error {
 	return repo.coll.UpdateOne(context.Background(), bson.M{"denom_id": one.DenomID, "nft_id": one.NftID},
 		bson.M{"$set": bson.M{
 			"data":              one.Data,
+			"denom_name":        one.DenomName,
 			"last_block_height": one.LastBlockHeight,
 			"last_block_time":   one.LastBlockTime,
 			"nft_name":          one.NftName,
+			"owner":             one.Owner,
 			"UpdateTime":        one.UpdateTime,
 			"uri":               one.URI,
 		}})

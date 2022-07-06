@@ -5,10 +5,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	ConfigFilePath string
-)
-
 type (
 	Config struct {
 		DataBase DataBaseConf `mapstructure:"database"`

@@ -1,32 +1,56 @@
 package service
 
-/*type DenomIssue struct {
+import (
+	"github.com/kaifei-bianjie/msg-parser/modules/nft"
+	"github.com/kaifei-bianjie/msg-parser/types"
+	"github.com/llygcd/block-compensation/internal/model/dto"
+	"github.com/llygcd/block-compensation/internal/repository"
+	"github.com/llygcd/block-compensation/pkg/opb_client"
+	"github.com/qiniu/qmgo"
+	"time"
+)
+
+type DenomIssue struct {
 	repo repository.IDenomRepo
 }
 
 func (n *DenomIssue) Compensation(msg types.TxMsg, tx *dto.Tx) error {
 	var issueDenom = msg.Msg.(*nft.DocMsgIssueDenom)
-	denom, err := opb.QueryDenom(issueDenom.Id)
+	denom, err := opb_client.QueryDenom(issueDenom.Id)
 	if err != nil {
-		return errors.New(err.Error())
+		return err
 	}
-	owner, err := opb.QueryOwner(denom.Creator, denom.Id)
+
+	one, err := n.repo.FindOne(denom.Denom.Id)
 	if err != nil {
-		return errors.New(err.Error())
+		if err == qmgo.ErrNoSuchDocuments {
+			return n.repo.Save(&dto.Denom{
+				Name:            denom.Denom.Name,
+				DenomID:         denom.Denom.Id,
+				JsonSchema:      denom.Denom.Schema,
+				Creator:         issueDenom.Sender,
+				Owner:           denom.Denom.Owner,
+				Txhash:          tx.TxHash,
+				Height:          int(tx.Height),
+				Time:            int(tx.Time),
+				CreateTime:      int(time.Now().Unix()),
+				LastBlockHeight: int(tx.Height),
+				LastBlockTime:   int(tx.Time),
+			})
+		}
+		return err
 	}
-	return n.repo.Save(&dto.Denom{
-		Name:            denom.Name,
-		DenomID:         denom.Id,
-		JsonSchema:      denom.Schema,
-		Creator:         denom.Creator,
-		Owner:           owner.Address,
-		Txhash:          tx.TxHash,
-		Height:          tx.Height,
-		Time:            tx.Time,
-		CreateTime:      time.Now().Unix(),
-		LastBlockHeight: tx.Height,
-		LastBlockTime:   tx.Time,
-	})
+	one.Name = denom.Denom.Name
+	one.DenomID = denom.Denom.Id
+	one.JsonSchema = denom.Denom.Schema
+	one.Creator = issueDenom.Sender
+	one.Owner = denom.Denom.Owner
+	one.Txhash = tx.TxHash
+	one.Height = int(tx.Height)
+	one.Time = int(tx.Time)
+	one.LastBlockHeight = int(tx.Height)
+	one.LastBlockTime = int(tx.Time)
+	return n.repo.Update(one)
 }
 
 type DenomTransfer struct {
@@ -35,25 +59,39 @@ type DenomTransfer struct {
 
 func (n *DenomTransfer) Compensation(msg types.TxMsg, tx *dto.Tx) error {
 	var transferDenom = msg.Msg.(*nft.DocMsgTransferDenom)
-	denom, err := opb.QueryDenom(transferDenom.Id)
+	denom, err := opb_client.QueryDenom(transferDenom.Id)
 	if err != nil {
-		return errors.New(err.Error())
-	}
-	owner, err := opb.QueryOwner(denom.Creator, denom.Id)
-	if err != nil {
-		return errors.New(err.Error())
-	}
-	one, err1 := n.repo.FindOne(denom.Id)
-	if err1 != nil {
-		return errors.New(err1.Error())
+		return err
 	}
 
-	one.Creator = denom.Creator
-	one.Owner = owner.Address
+	one, err := n.repo.FindOne(denom.Denom.Id)
+	if err != nil {
+		if err == qmgo.ErrNoSuchDocuments {
+			return n.repo.Save(&dto.Denom{
+				Name:            denom.Denom.Name,
+				DenomID:         denom.Denom.Id,
+				JsonSchema:      denom.Denom.Schema,
+				Creator:         transferDenom.Sender,
+				Owner:           denom.Denom.Owner,
+				Txhash:          tx.TxHash,
+				Height:          int(tx.Height),
+				Time:            int(tx.Time),
+				CreateTime:      int(time.Now().Unix()),
+				LastBlockHeight: int(tx.Height),
+				LastBlockTime:   int(tx.Time),
+			})
+		}
+		return err
+	}
+
+	one.Name = denom.Denom.Name
+	one.DenomID = denom.Denom.Id
+	one.JsonSchema = denom.Denom.Schema
+	one.Owner = denom.Denom.Owner
 	one.Txhash = tx.TxHash
-	one.Height = tx.Height
-	one.Time = tx.Time
-	one.LastBlockHeight = tx.Height
-	one.LastBlockTime = tx.Time
+	one.Height = int(tx.Height)
+	one.Time = int(tx.Time)
+	one.LastBlockHeight = int(tx.Height)
+	one.LastBlockTime = int(tx.Time)
 	return n.repo.Update(one)
-}*/
+}

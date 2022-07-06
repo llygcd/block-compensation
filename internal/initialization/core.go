@@ -18,14 +18,14 @@ func NewRepositories(mongoCli *qmgo.Client, dbName string) *model.Repositories {
 	}
 }
 
-func NewServices(r *model.Repositories) *model.Services {
+func NewServices(r *model.Repositories, client *pool.Client) *model.Services {
 	return &model.Services{
-		CompensationService: service.NewCompensationService(r.DenomRepo, r.NftRepo, r.BolckRepo, r.TxRepo),
+		CompensationService: service.NewCompensationService(r.DenomRepo, r.NftRepo, r.BolckRepo, r.TxRepo, client),
 	}
 }
 
-func NewControllers(s *model.Services, poolClient *pool.Client) *model.Controllers {
+func NewControllers(s *model.Services) *model.Controllers {
 	return &model.Controllers{
-		CompensationController: rest.NewCompensationController(s.CompensationService, poolClient),
+		CompensationController: rest.NewCompensationController(s.CompensationService),
 	}
 }

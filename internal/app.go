@@ -6,6 +6,7 @@ import (
 	"github.com/llygcd/block-compensation/config"
 	"github.com/llygcd/block-compensation/handlers"
 	"github.com/llygcd/block-compensation/internal/initialization"
+	"github.com/llygcd/block-compensation/pkg/opb_client"
 	"github.com/llygcd/block-compensation/pkg/pool"
 	"github.com/sirupsen/logrus"
 )
@@ -14,11 +15,13 @@ func Serve(cfg *config.Config) {
 
 	mongoDb := initialization.NewQMgo(cfg.DataBase, context.Background())
 
-	if mongoDb != nil {
+	/*	if mongoDb != nil {
 		initialization.MgoCollections(mongoDb)
-	}
+	}*/
 
 	pool.Init(cfg)
+
+	opb_client.Conn = opb_client.Init(cfg)
 
 	handlers.InitRouter(cfg)
 
@@ -26,8 +29,8 @@ func Serve(cfg *config.Config) {
 
 	repositories := initialization.NewRepositories(mongoDb, cfg.DataBase.DbName)
 
-	services := initialization.NewServices(repositories)
-	controllers := initialization.NewControllers(services, poolClient)
+	services := initialization.NewServices(repositories, poolClient)
+	controllers := initialization.NewControllers(services)
 
 	r := gin.Default()
 	initialization.Routers(r, controllers)

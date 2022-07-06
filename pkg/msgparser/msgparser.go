@@ -53,7 +53,7 @@ func (parser msgParser) getModule(v types.SdkMsg) string {
 		route = TIbcRouteKey
 	} else if strings.HasPrefix(data, "/tibc.apps.") {
 		route = TIbcTransferRouteKey
-	} else if strings.HasPrefix(data, "/irismod.opb.") {
+	} else if strings.HasPrefix(data, "/irismod.nft.") {
 		route = NftRouteKey
 	} else if strings.HasPrefix(data, "/irismod.coinswap.") {
 		route = CoinswapRouteKey

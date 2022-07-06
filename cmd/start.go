@@ -4,10 +4,12 @@ import (
 	"github.com/llygcd/block-compensation/config"
 	app "github.com/llygcd/block-compensation/internal"
 	"github.com/llygcd/block-compensation/internal/global"
+	"github.com/llygcd/block-compensation/utils/constant"
 	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"io/ioutil"
+	"os"
 )
 
 var (
@@ -31,11 +33,15 @@ var (
 func init() {
 	rootCmd.AddCommand(startCmd)
 	startCmd.AddCommand(testCmd)
-	testCmd.Flags().StringVarP(&localConfig, "Config", "c", "", "conf path: /home/lly/go/src/github.com/llygcd/block-compensation/config/cfg.toml")
+	testCmd.Flags().StringVarP(&localConfig, "Config", "c", "", "conf path: /opt/cfg.toml")
 }
 
 func test() {
-	data, err := ioutil.ReadFile("/home/lly/go/src/github.com/llygcd/block-compensation/config/cfg.toml")
+	configPath := "/block-compensation/config"
+	if v, ok := os.LookupEnv(constant.EnvNameConfigFilePath); ok {
+		configPath = v
+	}
+	data, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		panic(err)
 	}

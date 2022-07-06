@@ -89,7 +89,7 @@ func ParseBlockAndTxs(b int64, client *pool.Client) (*dto.Block, []*dto.Tx, erro
 	if len(block.Block.Txs) > 0 {
 		for i, v := range block.Block.Txs {
 			txResult := blockResults.TxsResults[i]
-			txDoc, err := parseTx(uint32(i), v, txResult, block.Block)
+			txDoc, err := parseTx(i, v, txResult, block.Block)
 			if err != nil {
 				return &blockDoc, txDocs, err
 			}
@@ -102,7 +102,7 @@ func ParseBlockAndTxs(b int64, client *pool.Client) (*dto.Block, []*dto.Tx, erro
 	return &blockDoc, txDocs, nil
 }
 
-func parseTx(index uint32, txBytes types.Tx, txResult *types2.ResponseDeliverTx, block *types.Block) (dto.Tx, error) {
+func parseTx(index int, txBytes types.Tx, txResult *types2.ResponseDeliverTx, block *types.Block) (dto.Tx, error) {
 	var (
 		docTx dto.Tx
 
@@ -113,7 +113,7 @@ func parseTx(index uint32, txBytes types.Tx, txResult *types2.ResponseDeliverTx,
 	docTx.Time = block.Time.Unix()
 	docTx.Height = block.Height
 	docTx.TxHash = txHash
-	docTx.Status = parseTxStatus(txResult.Code)
+	docTx.Status = int(parseTxStatus(txResult.Code))
 	if docTx.Status == constant.TxStatusFail {
 		docTx.Log = txResult.Log
 	}
