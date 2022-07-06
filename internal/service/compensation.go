@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/llygcd/block-compensation/handlers"
 	"github.com/llygcd/block-compensation/internal/repository"
-	"github.com/llygcd/block-compensation/libs/pool"
+	"github.com/llygcd/block-compensation/pkg/pool"
 	"github.com/sirupsen/logrus"
 )
 

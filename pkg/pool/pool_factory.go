@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	commonPool "github.com/jolestar/go-commons-pool"
-	"github.com/llygcd/block-compensation/libs/pool/jrpc"
+	"github.com/llygcd/block-compensation/pkg/pool/jrpc"
 	"github.com/sirupsen/logrus"
 	rpcclient "github.com/tendermint/tendermint/rpc/client/http"
 	"math/rand"

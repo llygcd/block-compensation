@@ -1,5 +1,5 @@
 syntax = "proto3";
-package irismod.nft;
+package nft;
 
 import "gogoproto/gogo.proto";
 

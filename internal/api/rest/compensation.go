@@ -3,7 +3,7 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/llygcd/block-compensation/internal/service"
-	"github.com/llygcd/block-compensation/libs/pool"
+	"github.com/llygcd/block-compensation/pkg/pool"
 	"strconv"
 )
 

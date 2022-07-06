@@ -7,7 +7,7 @@ import (
 	"github.com/llygcd/block-compensation/config"
 	"github.com/llygcd/block-compensation/handlers"
 	"github.com/llygcd/block-compensation/internal/initialization"
-	"github.com/llygcd/block-compensation/libs/pool"
+	"github.com/llygcd/block-compensation/pkg/pool"
 	"io/ioutil"
 	"testing"
 )

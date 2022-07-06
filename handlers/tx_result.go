@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"context"
-	"github.com/llygcd/block-compensation/libs/pool"
+	"github.com/llygcd/block-compensation/pkg/pool"
 	"github.com/llygcd/block-compensation/utils"
 	"github.com/sirupsen/logrus"
 	ctypes "github.com/tendermint/tendermint/rpc/core/types"
