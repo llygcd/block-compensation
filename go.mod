@@ -15,6 +15,8 @@ require (
 	github.com/tendermint/tendermint v0.35.0
 	go.mongodb.org/mongo-driver v1.8.0
 	golang.org/x/net v0.0.0-20211111160137-58aab5ef257a
+	google.golang.org/genproto v0.0.0-20211116182654-e63d96a377c4
+	google.golang.org/grpc v1.41.0
 )
 
 require (
@@ -148,8 +150,6 @@ require (
 	golang.org/x/sys v0.0.0-20211111213525-f221eed1c01e // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20211116182654-e63d96a377c4 // indirect
-	google.golang.org/grpc v1.41.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.63.2 // indirect
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
