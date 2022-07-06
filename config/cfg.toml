@@ -1,0 +1,26 @@
+[database]
+uri= "mongodb://iris:irispassword@127.0.0.1:27017/?authSource=block-compensation"
+db_name= "block-compensation"
+
+[server]
+app="127.0.0.1:8080"
+node_urls="http://47.100.192.234:26657"
+grpc_urls="47.100.192.234:9090"
+chain_id="testing"
+thread_num_parse_tx = 1
+worker_num_create_task=1
+worker_num_execute_task=30
+worker_max_sleep_time=120
+block_num_per_worker_handle=100
+max_connection_num=100
+init_connection_num=5
+bech32_acc_prefix="iaa"
+chain_block_interval=5
+behind_block_num=0
+insert_batch_limit=100
+promethous_port=9090
+only_support_module=""
+is_json_rpc_protocol=true
+
+
+

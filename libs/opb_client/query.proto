@@ -1,0 +1,67 @@
+syntax = "proto3";
+package proto;
+
+import "gogo.proto";
+import "annotations.proto";
+import "nft.proto";
+import "pagination.proto";
+
+option go_package = "github.com/llygcd/block-compensation/proto/opb";
+
+// Query defines the gRPC querier service for NFT module
+service Query {
+
+  // Owner queries the NFTs of the specified owner
+  rpc Owner(QueryOwnerRequest) returns (QueryOwnerResponse) {
+    option (proto.http).get = "/irismod/nft/nfts";
+  }
+
+
+  // Denom queries the definition of a given denom
+  rpc Denom(QueryDenomRequest) returns (QueryDenomResponse) {
+    option (proto.http).get = "/irismod/nft/denoms/{denom_id}";
+  }
+
+  // NFT queries the NFT for the given denom and token ID
+  rpc NFT(QueryNFTRequest) returns (QueryNFTResponse) {
+    option (proto.http).get = "/irismod/nft/nfts/{denom_id}/{token_id}";
+  }
+}
+
+
+// QueryOwnerRequest is the request type for the Query/Owner RPC method
+message QueryOwnerRequest {
+  string denom_id = 1 [ (proto.moretags) = "yaml:\"denom_id\"" ];
+  string owner = 2 [ (proto.moretags) = "yaml:\"owner\"" ];
+  // pagination defines an optional pagination for the request.
+  proto.PageRequest pagination = 3;
+}
+
+// QueryOwnerResponse is the response type for the Query/Owner RPC method
+message QueryOwnerResponse {
+  Owner owner = 1;
+  proto.PageResponse pagination = 2;
+}
+
+
+
+// QueryDenomRequest is the request type for the Query/Denom RPC method
+message QueryDenomRequest {
+  string denom_id = 1 [ (proto.moretags) = "yaml:\"denom_id\"" ];
+}
+
+// QueryDenomResponse is the response type for the Query/Denom RPC method
+message QueryDenomResponse {
+  Denom denom = 1;
+}
+
+// QueryNFTRequest is the request type for the Query/NFT RPC method
+message QueryNFTRequest {
+  string denom_id = 1 [ (proto.moretags) = "yaml:\"denom_id\"" ];
+  string token_id = 2 [ (proto.moretags) = "yaml:\"token_id\"" ];
+}
+
+// QueryNFTResponse is the response type for the Query/NFT RPC method
+message QueryNFTResponse {
+  BaseNFT nft = 1 [ (proto.customname) = "NFT" ];
+}
